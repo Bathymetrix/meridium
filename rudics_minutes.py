@@ -1,5 +1,5 @@
 # Author: Joel D. Simon <jdsimon@bathymetrix.com>
-# Last modified: 11-Nov-2025
+# Last modified: 12-Nov-2025
 # Last tested: Python Python Python 3.12.0, Darwin Kernel Version 23.6.0
 
 import os
@@ -36,10 +36,8 @@ def parse_transmissions(files):
                         if timestamp not in seen_timestamps:
                             totals[month] += third_minutes
                             seen_timestamps.add(timestamp)
-
         except Exception as e:
             print(f"Error reading {f}: {e}")
-
     return totals
 
 def write_results(totals, output_file="rudics_minutes.txt"):
@@ -53,6 +51,7 @@ def write_results(totals, output_file="rudics_minutes.txt"):
 
 
 if __name__ == "__main__":
+    # Write $MERMAID/processed_everyone/<float-name>/rudics_minutes.txt
     root_dir = os.environ.get("MERMAID")
     if root_dir is None:
         raise EnvironmentError("MERMAID environment variable not set.")
@@ -66,8 +65,8 @@ if __name__ == "__main__":
             continue
         if not os.path.isdir(subdir_path):
             continue
-
         print(f"Processing: {subdir_path}")
+
         # Find all CYCLE.h files in this subdir recursively
         cycle_files = list(find_cycle_files(subdir_path))
 
